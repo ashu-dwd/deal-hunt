@@ -1,6 +1,7 @@
 "use server";
 import AddProductForm from "@/components/AddProductForm";
 import AuthButton from "@/components/AuthButton";
+import ProductsList from "@/components/ProductsList";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,8 +17,10 @@ import { createClient } from "@/utils/supabase/server";
 
 export default async function Home() {
   const supabase = await createClient();
-  const { data: user } = await supabase.auth.getUser();
-  console.log(user);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  console.log("user:", user);
   // const [user, setUser] = React.useState(null);
   return (
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 text-slate-900">
@@ -96,6 +99,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <ProductsList user={user} />
 
       <section id="features" className="py-16">
         <div className="max-w-7xl mx-auto px-4">

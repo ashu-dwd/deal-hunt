@@ -222,6 +222,37 @@ export const getAllProducts = async () => {
   };
 };
 
+//get all products for a user
+export const getAllProductsByUserId = async (userId) => {
+  try {
+    const supabase = await createClient();
+    const { data: user } = await supabase.auth.getUser();
+    if (!user) {
+      return { error: "You must be logged in to get all products" };
+    }
+    const { data: products, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("user_id", userId)
+      .order("updated_at", { ascending: false })
+      .limit(100);
+    console.log("products:", products);
+    if (error) {
+      console.log("error:", error);
+      return { error: "Failed to get all products" };
+    }
+    return {
+      success: true,
+      message: "Successfully fetched all products",
+      products: products,
+    };
+  } catch (error) {
+    console.error("Error getting all products:", error);
+    return { error: error.message || "Failed to get all products" };
+  }
+};
+
+//get product by id
 export const getProduct = async (productId) => {
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
