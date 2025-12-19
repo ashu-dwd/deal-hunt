@@ -37,9 +37,9 @@ export const addProduct = async (formData) => {
     const { data: existingProduct } = await supabase
       .from("products")
       .select("id", "current_price")
-      .eq("user_id", user_id)
+      .eq("user_id", user.id)
       .eq("url", url)
-      .single();
+      .maybeSingle();
 
     const isUpdate = !!existingProduct;
 
@@ -65,10 +65,11 @@ export const addProduct = async (formData) => {
       .single();
 
     if (error) {
-      return { error: "Failed to add product" };
+      console.log("error:", error);
+      return { error: "Failed to add product " + error.message };
     }
     //add to price_history if it is a new product or price has changed
-    if (isUpdate || newPrice !== existingProduct.current_price) {
+    if (!isUpdate || newPrice !== existingProduct.current_price) {
       await supabase
         .from("price_history")
         .insert({
@@ -76,7 +77,7 @@ export const addProduct = async (formData) => {
           product_id: product.id,
           price: newPrice,
           currency: currency,
-          date: new Date().toISOString(),
+          checked_at: new Date().toISOString(),
         })
         .select()
         .single();
@@ -140,7 +141,7 @@ export const updateProduct = async (productId, formData) => {
       .select("id", "current_price")
       .eq("user_id", user.id)
       .eq("url", url)
-      .single();
+      .maybeSingle();
 
     const isUpdate = !!existingProduct;
 
@@ -169,7 +170,7 @@ export const updateProduct = async (productId, formData) => {
       return { error: "Failed to update product" };
     }
     //add to price_history if it is a new product or price has changed
-    if (isUpdate || newPrice !== existingProduct.current_price) {
+    if (!isUpdate || newPrice !== existingProduct.current_price) {
       await supabase
         .from("price_history")
         .insert({
@@ -177,7 +178,7 @@ export const updateProduct = async (productId, formData) => {
           product_id: product.id,
           price: newPrice,
           currency: currency,
-          date: new Date().toISOString(),
+          checked_at: new Date().toISOString(),
         })
         .select()
         .single();

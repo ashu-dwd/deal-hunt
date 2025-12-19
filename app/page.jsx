@@ -92,7 +92,7 @@ export default async function Home() {
             </p>
           </div>
           <div className="max-w-2xl mx-auto">
-            <AddProductForm />
+            <AddProductForm user={user} />
           </div>
         </div>
       </section>
