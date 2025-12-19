@@ -15,14 +15,14 @@ export default function Header({ user, activePage }) {
             <Image
               src="/image.png"
               alt="Dealdrop logo"
-              className="h-10 w-auto"
+              className="h-8 md:h-10 w-auto"
               width={200}
               height={220}
             />
           </Link>
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2 md:gap-6">
           <nav className="hidden md:flex items-center gap-6 text-sm text-slate-700">
             <Link
               href="/#features"
