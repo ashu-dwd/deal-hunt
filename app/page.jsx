@@ -17,9 +17,8 @@ import { createClient } from "@/utils/supabase/server";
 
 export default async function Home() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getUser();
+  const user = data?.user || null;
   console.log("user:", user);
   // const [user, setUser] = React.useState(null);
   return (

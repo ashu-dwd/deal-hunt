@@ -22,9 +22,8 @@ export const addProduct = async (formData) => {
   }
   try {
     const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { data, error: authError } = await supabase.auth.getUser();
+    const user = data?.user || null;
     if (!user) {
       return { error: "You must be logged in to add a product" };
     }
@@ -97,7 +96,8 @@ export const addProduct = async (formData) => {
 //delete product
 export const deleteProduct = async (productId) => {
   const supabase = await createClient();
-  const { data: user } = await supabase.auth.getUser();
+  const { data, error: authError } = await supabase.auth.getUser();
+  const user = data?.user || null;
   if (!user) {
     return { error: "You must be logged in to delete a product" };
   }
@@ -126,7 +126,8 @@ export const updateProduct = async (productId, formData) => {
   }
   try {
     const supabase = await createClient();
-    const { data: user } = await supabase.auth.getUser();
+    const { data, error: authError } = await supabase.auth.getUser();
+    const user = data?.user || null;
     if (!user) {
       return { error: "You must be logged in to update a product" };
     }
@@ -201,7 +202,8 @@ export const updateProduct = async (productId, formData) => {
 //get all products
 export const getAllProducts = async () => {
   const supabase = await createClient();
-  const { data: user } = await supabase.auth.getUser();
+  const { data, error: authError } = await supabase.auth.getUser();
+  const user = data?.user || null;
   if (!user) {
     return { error: "You must be logged in to get all products" };
   }
@@ -226,7 +228,8 @@ export const getAllProducts = async () => {
 export const getAllProductsByUserId = async (userId) => {
   try {
     const supabase = await createClient();
-    const { data: user } = await supabase.auth.getUser();
+    const { data, error: authError } = await supabase.auth.getUser();
+    const user = data?.user || null;
     if (!user) {
       return { error: "You must be logged in to get all products" };
     }
@@ -255,7 +258,8 @@ export const getAllProductsByUserId = async (userId) => {
 //get product by id
 export const getProduct = async (productId) => {
   const supabase = await createClient();
-  const { data: user } = await supabase.auth.getUser();
+  const { data, error: authError } = await supabase.auth.getUser();
+  const user = data?.user || null;
   if (!user) {
     return { error: "You must be logged in to get a product" };
   }
@@ -278,7 +282,8 @@ export const getProduct = async (productId) => {
 //get price history for a product
 export const getPriceHistory = async (productId) => {
   const supabase = await createClient();
-  const { data: user } = await supabase.auth.getUser();
+  const { data, error: authError } = await supabase.auth.getUser();
+  const user = data?.user || null;
   if (!user) {
     return { error: "You must be logged in to get price history" };
   }
