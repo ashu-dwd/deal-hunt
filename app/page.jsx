@@ -2,8 +2,11 @@
 import AddProductForm from "@/components/AddProductForm";
 import AuthButton from "@/components/AuthButton";
 import ProductsList from "@/components/ProductsList";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
   LogIn,
   TrendingUp,
@@ -23,45 +26,7 @@ export default async function Home() {
   // const [user, setUser] = React.useState(null);
   return (
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 text-slate-900">
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/image.png"
-              alt="Dealdrop logo"
-              className="h-10 w-auto"
-              width={200}
-              height={220}
-            />
-          </div>
-
-          <div className="flex items-center gap-6">
-            <nav className="hidden md:flex items-center gap-6 text-sm text-slate-700">
-              <a
-                href="/#features"
-                className="hover:text-slate-900 transition-colors"
-              >
-                Features
-              </a>
-              <a
-                href="/#how"
-                className="hover:text-slate-900 transition-colors"
-              >
-                How it works
-              </a>
-              <a
-                href="/pricing"
-                className="hover:text-slate-900 transition-colors"
-              >
-                Pricing
-              </a>
-            </nav>
-            <div className="flex items-center gap-3">
-              <AuthButton user={user} />
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header user={user} />
 
       <section className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -76,12 +41,18 @@ export default async function Home() {
             </p>
 
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <Button className="bg-orange-500 text-white">
+              <Link
+                href="#start-tracking"
+                className="bg-orange-500 text-white px-4 py-2 rounded-md font-medium hover:bg-orange-600 transition-colors inline-block text-center"
+              >
                 Get started — it's free
-              </Button>
-              <Button variant="outline" className="text-slate-700">
+              </Link>
+              <Link
+                href="#how"
+                className="border border-slate-300 text-slate-700 px-4 py-2 rounded-md font-medium hover:bg-slate-50 transition-colors inline-block text-center"
+              >
                 Learn more
-              </Button>
+              </Link>
             </div>
           </div>
 
@@ -93,7 +64,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="bg-white/60 py-16">
+      <section id="start-tracking" className="bg-white/60 py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-semibold">Start tracking</h2>
@@ -197,21 +168,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 mt-12 bg-white/60">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-slate-600">
-            © {new Date().getFullYear()} Dealdrop — Price tracking made simple.
-          </div>
-          <div className="flex items-center gap-4">
-            <a href="#" className="text-sm text-slate-600 hover:text-slate-900">
-              Privacy
-            </a>
-            <a href="#" className="text-sm text-slate-600 hover:text-slate-900">
-              Terms
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

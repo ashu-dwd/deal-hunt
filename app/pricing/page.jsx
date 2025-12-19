@@ -3,6 +3,9 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Coffee } from "lucide-react";
 import Image from "next/image";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function PricingPage() {
@@ -65,46 +68,7 @@ export default async function PricingPage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/image.png"
-              alt="Dealdrop logo"
-              className="h-10 w-auto"
-              width={200}
-              height={220}
-            />
-          </div>
-
-          <div className="flex items-center gap-6">
-            <nav className="hidden md:flex items-center gap-6 text-sm text-slate-700">
-              <a
-                href="/#features"
-                className="hover:text-slate-900 transition-colors"
-              >
-                Features
-              </a>
-              <a
-                href="/#how"
-                className="hover:text-slate-900 transition-colors"
-              >
-                How it works
-              </a>
-              <a
-                href="/pricing"
-                className="hover:text-slate-900 transition-colors font-semibold text-orange-600"
-              >
-                Pricing
-              </a>
-            </nav>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-              Sign in
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header user={user} activePage="pricing" />
 
       {/* Pricing Header */}
       <section className="max-w-7xl mx-auto px-4 py-16 text-center">
@@ -217,30 +181,15 @@ export default async function PricingPage() {
         <p className="text-slate-600 mb-8 text-lg">
           Join thousands of deal hunters saving money with Dealdrop.
         </p>
-        <Button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-12 rounded-lg text-lg">
+        <Link
+          href="/"
+          className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-12 rounded-lg text-lg inline-block text-center"
+        >
           Start Free Today
-        </Button>
+        </Link>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-200 mt-12 bg-white/60">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-slate-600">
-            © {new Date().getFullYear()} Dealdrop — Price tracking made simple.
-          </div>
-          <div className="flex items-center gap-4">
-            <a href="#" className="text-sm text-slate-600 hover:text-slate-900">
-              Privacy
-            </a>
-            <a href="#" className="text-sm text-slate-600 hover:text-slate-900">
-              Terms
-            </a>
-            <a href="#" className="text-sm text-slate-600 hover:text-slate-900">
-              Contact
-            </a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
