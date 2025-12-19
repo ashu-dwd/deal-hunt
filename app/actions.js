@@ -290,12 +290,12 @@ export const getPriceHistory = async (productId) => {
   const { data: priceHistory, error } = await supabase
     .from("price_history")
     .select()
-    .eq("user_id", user.id)
     .eq("product_id", productId)
     .order("checked_at", { ascending: true })
     .limit(100)
     .select();
   if (error) {
+    console.error("Error getting price history:", error);
     return { error: "Failed to get price history" };
   }
   return {

@@ -11,15 +11,9 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { DollarSign, Clock, ExternalLink } from "lucide-react";
 import { getAllProducts, getAllProductsByUserId } from "@/app/actions";
+import ProductModal from "./ProductModal";
 
 const dummyProducts = [];
 
@@ -156,7 +150,8 @@ export default function ProductsList({ user }) {
                       <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
                         <DollarSign className="w-4 h-4 text-green-600 flex-shrink-0" />
                         <span className="text-lg font-bold text-green-700">
-                          {formatCurrency(product.current_price)}
+                          {formatCurrency(product.current_price)}{" "}
+                          {product.currency}
                         </span>
                       </div>
                     </div>
@@ -240,112 +235,11 @@ export default function ProductsList({ user }) {
       )}
 
       {/* Product Details Modal */}
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          {selectedProduct && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="text-2xl">
-                  {selectedProduct.name}
-                </DialogTitle>
-                <DialogDescription>Product Details</DialogDescription>
-              </DialogHeader>
-
-              <div className="space-y-6">
-                {/* Product Image in Modal */}
-                <div className="w-full rounded-lg overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200">
-                  <img
-                    src={selectedProduct.image_url || "/placeholder-image.png"}
-                    alt={selectedProduct.name}
-                    className="w-full h-auto object-cover max-h-96"
-                    onError={(e) => {
-                      e.target.src =
-                        "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OTk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPuKAniBGYWlsZWQgdG8gbG9hZCBpbWFnZTwvdGV4dD48L3N2Zz4=";
-                    }}
-                  />
-                </div>
-
-                {/* Product Details Grid */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="col-span-2 sm:col-span-1">
-                    <p className="text-sm text-slate-600 font-medium mb-1">
-                      Currency
-                    </p>
-                    <p className="text-lg font-semibold text-slate-900">
-                      {selectedProduct.currency || "USD"}
-                    </p>
-                  </div>
-
-                  <div className="col-span-2 sm:col-span-1">
-                    <p className="text-sm text-slate-600 font-medium mb-1">
-                      Current Price
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="w-5 h-5 text-green-600" />
-                      <p className="text-lg font-bold text-green-700">
-                        {formatCurrency(selectedProduct.current_price)}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="col-span-2">
-                    <p className="text-sm text-slate-600 font-medium mb-1">
-                      Last Updated
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-slate-400" />
-                      <p className="text-slate-700">
-                        {new Date(
-                          selectedProduct.updated_at
-                        ).toLocaleDateString()}{" "}
-                        at{" "}
-                        {new Date(
-                          selectedProduct.updated_at
-                        ).toLocaleTimeString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="col-span-2">
-                    <p className="text-sm text-slate-600 font-medium mb-2">
-                      Product Link
-                    </p>
-                    <a
-                      href={selectedProduct.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline break-all"
-                    >
-                      <ExternalLink className="w-4 h-4 flex-shrink-0" />
-                      {selectedProduct.url}
-                    </a>
-                  </div>
-                </div>
-
-                {/* Modal Action Buttons */}
-                <div className="flex gap-3 pt-4 border-t border-slate-200">
-                  <Button
-                    onClick={() => {
-                      window.open(selectedProduct.url, "_blank");
-                    }}
-                    className="flex-1 bg-orange-500 hover:bg-orange-600 text-white"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Open Product Link
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => setModalOpen(false)}
-                    className="flex-1"
-                  >
-                    Close
-                  </Button>
-                </div>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+      <ProductModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        product={selectedProduct}
+      />
     </div>
   );
 }
