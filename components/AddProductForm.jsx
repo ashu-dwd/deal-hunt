@@ -16,7 +16,7 @@ const AddProductForm = ({ user }) => {
     e.preventDefault();
     console.log("user in AddProductForm:", user);
     if (!url) return;
-    if (!user || user.user === null) {
+    if (!user) {
       console.log("User not logged in");
       setShowAuthModal(true);
       return;

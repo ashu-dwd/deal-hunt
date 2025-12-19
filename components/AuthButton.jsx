@@ -21,7 +21,7 @@ const AuthButton = ({ user }) => {
     console.log("User signed out");
     handleCloseModal();
   };
-  if (user.user !== null) {
+  if (user) {
     return (
       <div>
         <Button
