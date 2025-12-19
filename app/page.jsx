@@ -33,24 +33,32 @@ export default async function Home() {
               width={200}
               height={220}
             />
+          </div>
+
+          <div className="flex items-center gap-6">
             <nav className="hidden md:flex items-center gap-6 text-sm text-slate-700">
-              <a href="#features" className="hover:text-slate-900">
+              <a
+                href="/#features"
+                className="hover:text-slate-900 transition-colors"
+              >
                 Features
               </a>
-              <a href="#how" className="hover:text-slate-900">
+              <a
+                href="/#how"
+                className="hover:text-slate-900 transition-colors"
+              >
                 How it works
               </a>
-              <a href="#pricing" className="hover:text-slate-900">
+              <a
+                href="/pricing"
+                className="hover:text-slate-900 transition-colors"
+              >
                 Pricing
               </a>
             </nav>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" className="hidden md:inline-flex">
-              Explore
-            </Button>
-            <AuthButton user={user} />
+            <div className="flex items-center gap-3">
+              <AuthButton user={user} />
+            </div>
           </div>
         </div>
       </header>

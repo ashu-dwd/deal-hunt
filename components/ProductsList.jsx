@@ -80,13 +80,27 @@ export default function ProductsList({ user }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-slate-800">Featured Products</h2>
-        <p className="mt-3 text-slate-600 text-lg">
-          Browse our selection of tracked products with current prices and
-          savings
-        </p>
-      </div>
+      {user ? (
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-slate-800">
+            Your Tracked Products
+          </h2>
+          <p className="mt-3 text-slate-600 text-lg">
+            Browse your selection of tracked products with current prices and
+            savings
+          </p>
+        </div>
+      ) : (
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-slate-800">
+            Featured Products
+          </h2>
+          <p className="mt-3 text-slate-600 text-lg">
+            Browse our selection of tracked products with current prices and
+            savings
+          </p>
+        </div>
+      )}
 
       {loading ? (
         <div className="text-center py-12">
